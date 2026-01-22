@@ -1,6 +1,6 @@
+#!/bin/bash
 # sudo_configuration
 
-```bash
 set -e 
 ADMIN_GROUP="labadmins"
 USER_NAME=$(whoami)
@@ -50,4 +50,4 @@ for KEY in "${!PASS_POLICIES[@]}"; do
 done
 
 echo "IAM configuration completed"
-```
+

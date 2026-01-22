@@ -1,4 +1,6 @@
 #!/bin/bash
+# Network Hardening.
+
 set -e
 
 # Config based on server
