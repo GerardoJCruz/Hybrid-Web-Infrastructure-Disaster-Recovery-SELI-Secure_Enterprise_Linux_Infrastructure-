@@ -1,0 +1,18 @@
+[Unit]
+Description=Reverse SSH Tunnel to AWS (8080 -> local 80)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=$RUN_AS_USER
+ExecStart=/usr/bin/ssh -N \
+    -o ServerAliveInterval=30 \
+    -o ServerAliveCountMax=3 \
+    -i $SSH_KEY \
+    -R 8080:localhost:80 \
+    $AWS_USER@$AWS_IP
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
