@@ -110,3 +110,43 @@ A min-sized firm requires a high-security, hybrid environment:
 - Configure the Cloud Proxy to serve the local website to the public.
 - Schedule the off-site log mirroring and cloud backups.
 - Simulate a local "disaster" (shut down a local VM) and verify that the Cloud Sentinel sends an alert.
+
+
+## Project Topology: 
+[ PUBLIC INTERNET ]
+                      |
+                      | (1) Visitor hits your Website
+                      v
++---------------------------------------+
+|          AWS PUBLIC CLOUD             |
+|       (cloud-sentinel-01 EC2)         |
+|          IP: 100.xx.xx.xx             |
++---------------------------------------+
+|  [ Nginx Reverse Proxy ]              |
+|          |                            |
+|  (2) Traffic routed into Tunnel       |
+|          |                            |
+|  [ SSH Tunnel Endpoint (Port 8080) ] <-----+
++---------------------------------------+     |
+                                              | (3) SECURE SSH TUNNEL
+      [      HOME ROUTER / FIREWALL ]         |     (Encrypted Bridge)
+               |                              |
+               | <----------------------------+
+               v
++-------------------------------------------------------------+
+|                LOCAL PRIVATE VIRTUAL NETWORK                |
+|                  Subnet: 192.168.56.0/24                    |
++----------------------+-----------------------+--------------+
+|                                              |              |
+v                                              v              v
++--------------+                               +--------------+
+|  WEB SERVER  |                               | SEC MONITOR  |
+| (web-prod-01)|                               |  (Your PC)   |
+|  IP: .56.10  |                               |  IP: .56.20  |
++--------------+                               +--------------+
+|  [ Nginx ]   |                               | [MonitorLogs]|
+| Serves Page  |                               | monitor logs |
++--------------+                               +--------------+
+       ^                                              |
+       | (4) Page Served Back                         |
+       +----------------------------------------------+
