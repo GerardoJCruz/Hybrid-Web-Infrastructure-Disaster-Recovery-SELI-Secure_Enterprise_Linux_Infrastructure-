@@ -111,3 +111,5 @@ A min-sized firm requires a high-security, hybrid environment:
 - Schedule the off-site log mirroring and cloud backups.
 - Simulate a local "disaster" (shut down a local VM) and verify that the Cloud Sentinel sends an alert.
 
+## Topology
+![Hybrid Infrastructure Topology](/diagrams_and_images/linux_lab_topology.png)
